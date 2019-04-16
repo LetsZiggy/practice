@@ -1,0 +1,7 @@
+{
+	"presets": [["@babel/preset-env", { "loose": true, "exclude": ["@babel/plugin-proposal-dynamic-import"] }]],
+	"plugins": [
+		["@babel/plugin-proposal-decorators", { "version": "legacy" }], // "legacy": true
+		["@babel/plugin-transform-class-properties", { "loose": true }]
+	]
+}
