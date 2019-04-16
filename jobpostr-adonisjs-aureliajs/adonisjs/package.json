@@ -1,0 +1,58 @@
+{
+	"name": "jobpostr-adonisjs",
+	"version": "0.1.0",
+	"description": "JobPostr - Aurelia.js",
+	"keywords": [
+		"adonisjs"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/LetsZiggy/practices"
+	},
+	"license": "MIT",
+	"contributors": [
+		"Shafiq Tahir"
+	],
+	"main": "index.js",
+	"scripts": {
+		"start": "node server.js",
+		"test": "node ace test"
+	},
+	"dependencies": {
+		"@adonisjs/ace": "^5.1.0",
+		"@adonisjs/auth": "^3.2.0",
+		"@adonisjs/bodyparser": "^2.3.0",
+		"@adonisjs/cors": "^1.0.7",
+		"@adonisjs/fold": "^4.1.0",
+		"@adonisjs/framework": "^5.0.13",
+		"@adonisjs/ignitor": "^2.0.8",
+		"@adonisjs/lucid": "^6.3.0",
+		"@adonisjs/session": "^1.1.0",
+		"@adonisjs/shield": "^1.1.0",
+		"@adonisjs/validator": "^5.1.0",
+		"@adonisjs/vow": "^1.0.17",
+		"sqlite3": "^5.1.6"
+	},
+	"devDependencies": {
+		"@adonisjs/cli": "^4.0.13",
+		"@babel/core": "^7.22.15",
+		"@babel/eslint-parser": "^7.22.15",
+		"@babel/plugin-proposal-decorators": "^7.22.15",
+		"@babel/preset-env": "^7.22.15",
+		"@babel/register": "^7.22.15",
+		"eslint": "^8.48.0",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-n": "^16.0.2",
+		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-sort-class-members": "^1.18.0",
+		"eslint-plugin-unicorn": "^48.0.1",
+		"prettier": "^3.0.3",
+		"prettier-plugin-organize-attributes": "^1.0.0",
+		"prettier-plugin-packagejson": "^2.4.5"
+	},
+	"adonis-version": "4.1.0",
+	"autoload": {
+		"App": "./app"
+	}
+}
