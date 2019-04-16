@@ -1,0 +1,13 @@
+!.*.js
+!.*.ts
+!*.js
+!*.ts
+
+**/.git/**
+**/.svn/**
+**/.hg/**
+**/CVS/**
+**/node_modules/**
+
+**/public/**
+**/scripts/**

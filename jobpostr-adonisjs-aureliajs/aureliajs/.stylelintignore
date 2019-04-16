@@ -1,0 +1,13 @@
+*
+
+!*.css
+!*/
+
+**/.git/**
+**/.svn/**
+**/.hg/**
+**/CVS/**
+**/node_modules/**
+
+**/public/**
+**/scripts/**
