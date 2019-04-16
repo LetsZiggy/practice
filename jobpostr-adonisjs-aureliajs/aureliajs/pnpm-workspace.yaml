@@ -1,0 +1,18 @@
+#$schema: 'https://www.schemastore.org/pnpm-workspace.json'
+
+allowBuilds:
+  core-js: true
+  sqlite3: true
+  unrs-resolver: true
+
+overrides:
+  chokidar: '^3.0.0'
+  glob-parent: '^6.0.0'
+  glob-stream: '^7.0.0'
+  micromatch: '^4.0.0'
+
+# installs any missing peer dependencies as dev dependencies
+autoInstallPeers: true
+
+# for pnpm, use flat node_modules
+shamefullyHoist: true
