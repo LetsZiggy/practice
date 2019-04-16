@@ -1,0 +1,12 @@
+#$schema: 'https://www.schemastore.org/pnpm-workspace.json'
+
+allowBuilds:
+  snyk: true
+  sqlite3: true
+  unrs-resolver: true
+
+# installs any missing peer dependencies as dev dependencies
+autoInstallPeers: true
+
+# for pnpm, use flat node_modules
+shamefullyHoist: true
