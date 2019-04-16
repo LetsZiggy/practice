@@ -1,0 +1,131 @@
+{
+	"name": "jobpostr-aureliajs",
+	"version": "0.1.0",
+	"description": "JobPostr - Aurelia.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/LetsZiggy/practices"
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "au build --env prod",
+		"e2e": "playwright test",
+		"fix:eslint": "eslint --fix .",
+		"fix:prettier": "prettier --write .",
+		"fix:stylelint": "stylelint --fix **/*.css",
+		"preinstall": "npx only-allow pnpm",
+		"lint:eslint": "eslint .",
+		"lint:prettier": "prettier --check .",
+		"lint:stylelint": "stylelint **/*.css",
+		"start": "au run",
+		"test": "au test"
+	},
+	"browserslist": [
+		"defaults"
+	],
+	"dependencies": {
+		"aurelia-animator-css": "^1.0.4",
+		"aurelia-bootstrapper": "^2.4.1",
+		"aurelia-fetch-client": "^1.8.2",
+		"aurelia-store": "^2.0.1",
+		"aurelia-validation": "^2.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.27.1",
+		"@babel/eslint-parser": "^7.27.1",
+		"@babel/plugin-proposal-decorators": "^7.27.1",
+		"@babel/preset-env": "^7.27.1",
+		"@babel/register": "^7.27.1",
+		"@carlosjeurissen/stylelint-csstree-validator": "^3.1.0",
+		"@eslint/js": "^9.26.0",
+		"@playwright/test": "^1.52.0",
+		"@ronilaukkarinen/gulp-stylelint": "^14.1.2",
+		"@stylistic/eslint-plugin": "^4.2.0",
+		"@stylistic/eslint-plugin-migrate": "^4.2.0",
+		"@tailwindcss/forms": "^0.5.10",
+		"@tailwindcss/typography": "^0.5.16",
+		"alameda": "^1.4.0",
+		"aurelia-cli": "^3.0.4",
+		"aurelia-testing": "^1.1.0",
+		"autoprefixer": "^10.4.21",
+		"connect": "^3.7.0",
+		"connect-history-api-fallback": "^2.0.0",
+		"connect-injector": "^0.4.4",
+		"cssnano": "^7.0.6",
+		"debounce": "^2.2.0",
+		"del": "<7.0.0",
+		"eslint": "^9.26.0",
+		"eslint-plugin-import": "^2.31.0",
+		"eslint-plugin-jasmine": "^4.2.2",
+		"eslint-plugin-n": "^17.17.0",
+		"eslint-plugin-playwright": "^2.2.0",
+		"eslint-plugin-promise": "^7.2.1",
+		"eslint-plugin-sort-class-members": "^1.21.0",
+		"eslint-plugin-sort-destructure-keys": "^2.0.0",
+		"eslint-plugin-unicorn": "^59.0.0",
+		"gulp": "^5.0.0",
+		"gulp-babel": "^8.0.0",
+		"gulp-cache": "^1.1.3",
+		"gulp-eslint": "^6.0.0",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-if": "^3.0.0",
+		"gulp-plumber": "^1.2.1",
+		"gulp-postcss": "^10.0.0",
+		"gulp-purgecss": "^7.0.2",
+		"gulp-rename": "^2.0.0",
+		"gulp-watch": "^5.0.1",
+		"jasmine-core": "^5.7.1",
+		"karma": "^6.4.4",
+		"karma-babel-preprocessor": "^8.0.2",
+		"karma-chrome-launcher": "^3.2.0",
+		"karma-jasmine": "^5.1.0",
+		"karma-sourcemap-loader": "^0.4.0",
+		"minimatch": "<6.0.0",
+		"open": "^10.1.2",
+		"postcss": "^8.5.3",
+		"postcss-url": "^10.1.3",
+		"prettier": "^3.5.3",
+		"prettier-plugin-organize-attributes": "^1.0.0",
+		"prettier-plugin-packagejson": "^2.5.10",
+		"promise-polyfill": "^8.3.0",
+		"redux": "<4.0.0",
+		"regenerator-runtime": "^0.14.1",
+		"serve-static": "^2.2.0",
+		"server-destroy": "^1.0.1",
+		"socket.io": "^4.8.1",
+		"stylelint": "^16.19.1",
+		"stylelint-config-recess-order": "^6.0.0",
+		"stylelint-config-standard": "^38.0.0",
+		"stylelint-order": "^7.0.0",
+		"tailwindcss": "<4.0.0",
+		"text": "requirejs/text",
+		"through2": "^4.0.2"
+	},
+	"engines": {
+		"node": ">=22.13.1"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"core-js",
+			"sqlite3"
+		],
+		"overrides": {
+			"chokidar": "^3.0.0",
+			"glob-parent": "^6.0.0",
+			"glob-stream": "^7.0.0",
+			"micromatch": "^4.0.0"
+		}
+	},
+	"overrides": {
+		"chokidar": "^3.0.0",
+		"glob-stream": "^7.0.0",
+		"glob-parent": "^6.0.0",
+		"micromatch": "^4.0.0"
+	},
+	"_updateNotes": {
+		"del": "Don't update pass del@^6 <https://github.com/sindresorhus/del/releases/tag/v7.0.0>",
+		"minimatch": "Don't update pass minimatch@^5 <https://github.com/isaacs/minimatch/blob/HEAD/changelog.md>",
+		"redux": "Don't update pass redux@^3 <https://github.com/reduxjs/redux/releases/tag/v4.0.0>",
+		"tailwindcss": "Don't update pass tailwindcss@^3 <https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.0.0>"
+	}
+}
