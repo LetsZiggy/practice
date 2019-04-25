@@ -1,5 +1,11 @@
 <template>
 	<require from="./app.css" content="text/css"></require>
+	<require from="resources/elements/nav-header" content="text/javascript"></require>
 
-	<h1>${ message }</h1>
+	<nav-header
+		class="block w-full h-16">
+	</nav-header>
+	<router-view
+		class="block flex-grow w-full h-auto">
+	</router-view>
 </template>
