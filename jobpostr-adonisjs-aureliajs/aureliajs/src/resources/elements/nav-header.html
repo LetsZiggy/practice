@@ -1,0 +1,46 @@
+<template>
+	<nav class="flex flex-row flex-nowrap content-center items-center justify-start w-full h-16 bg-gray-800">
+		<a
+			route-href="route: jobs;"
+			class="no-underline ml-8 font-black text-2xl text-gray-100 uppercase">
+			JobPostr
+		</a>
+
+		<ul class="flex flex-row flex-nowrap content-center items-center justify-start h-full ml-auto">
+			<li class="mr-8">
+				<a
+					route-href="route: jobs;"
+					class="no-underline text-sm text-gray-400 hover:text-gray-100 uppercase">
+					Jobs
+				</a>
+			</li>
+			<li
+				class="mr-8"
+				if.bind="!isSignin">
+				<a
+					route-href="route: signin;"
+					class="no-underline text-sm text-gray-400 hover:text-gray-100 uppercase">
+					Sign-in
+				</a>
+			</li>
+			<li
+				class="mr-8"
+				if.bind="!isSignin">
+				<a
+					route-href="route: signup;"
+					class="no-underline text-sm text-gray-400 hover:text-gray-100 uppercase">
+					Sign-up
+				</a>
+			</li>
+			<li
+				class="mr-8"
+				if.bind="isSignin">
+				<button
+					class="no-underline text-sm text-gray-400 hover:text-gray-100 uppercase"
+					click.delegate="signout()">
+					Sign-out
+				</button>
+			</li>
+		</ul>
+	</nav>
+</template>
