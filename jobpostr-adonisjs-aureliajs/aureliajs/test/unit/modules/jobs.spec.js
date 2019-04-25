@@ -1,15 +1,13 @@
-/* eslint-disable jasmine/no-disabled-tests */
-
 import { bootstrap } from "aurelia-bootstrapper"
 import { StageComponent } from "aurelia-testing"
 
-xdescribe("Stage App Component", () => {
+describe("Stage Jobs Component", () => {
 	let component
 
 	beforeEach(() => {
 		component = StageComponent
-			.withResources("app")
-			.inView("<app></app>")
+			.withResources("modules/jobs")
+			.inView("<jobs></jobs>")
 	})
 
 	afterEach(() => component.dispose())
@@ -21,7 +19,7 @@ xdescribe("Stage App Component", () => {
 				const view = document.querySelector("h1")
 
 				expect(view.textContent.trim())
-					.toBe("JobPostr")
+					.toBe("Jobs List")
 
 				done()
 			})
