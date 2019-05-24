@@ -5,6 +5,48 @@ import { nextStateHistory } from "aurelia-store"
 // https://aurelia.io/docs/plugins/store#making-our-app-history-aware
 // https://github.com/zewa666/aurelia-store-examples/blob/master/markdown/src/actions.ts
 const actions = {
+	toggleIsSignin: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isSignin: data,
+		})
+	},
+	toggleUsernameValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isUsernameValid: data,
+		})
+	},
+	toggleEmailValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isEmailValid: data,
+		})
+	},
+	togglePasswordValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isPasswordValid: data,
+		})
+	},
+	togglePasswordConfirmationValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isConfirmValid: data,
+		})
+	},
+	setUsername: (state, data = "") => {
+		return nextStateHistory(state, {
+			...state.present,
+			username: data,
+		})
+	},
+	setUserId: (state, data = 0) => {
+		return nextStateHistory(state, {
+			...state.present,
+			userId: data,
+		})
+	},
 	// action: (state, data) => {
 	// 	return nextStateHistory(state, {
 	// 		...state.present,
