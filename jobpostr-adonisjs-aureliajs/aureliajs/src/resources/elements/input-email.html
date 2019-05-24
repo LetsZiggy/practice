@@ -1,0 +1,15 @@
+<template>
+	<label class="w-full h-auto mb-1 text-lg text-gray-700">
+		<span class="inline-block mb-1">Email</span>
+		<span
+			id.one-time="`${ elemId }-error`"
+			class="${ valid ? 'hidden' : 'inline-block' } mb-1 ml-2 text-sm text-red-500">
+		</span>
+		<input
+			id.one-time="elemId"
+			name.one-time="elemId"
+			class="focus:shadow-outline w-full p-2 leading-tight outline-none"
+			type="email"
+			value.two-way="input" />
+	</label>
+</template>
