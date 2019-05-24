@@ -17,7 +17,24 @@
 const Route = use("Route")
 
 /* API Routes */
-// PLACEHOLDER
+Route.group(() => {
+	Route
+		.get("users/check", "UserController.check")
+
+	Route
+		.post("users/signup", "UserController.signup")
+		.validator("UserSignup")
+		.middleware(["guest"])
+
+	Route
+		.post("users/signin", "UserController.signin")
+		.validator("UserSignin")
+		.middleware(["guest"])
+
+	Route
+		.post("users/signout", "UserController.signout")
+		.middleware(["auth"])
+}).prefix("api")
 
 /* Must be final route */
 Route.any("*", ({ view }) => view.render("index"))
