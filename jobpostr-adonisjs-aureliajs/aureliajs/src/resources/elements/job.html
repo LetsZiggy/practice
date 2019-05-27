@@ -1,0 +1,37 @@
+<template>
+	<div class="w-16 h-16 m-2 border-black border-solid border bg-gray-100">
+		<img
+			class="text-xs text-gray-600"
+			src.one-way="url"
+			alt.one-way="job.title" />
+	</div>
+	<div class="w-auto h-16 mt-2 ml-2">
+		<div class="flex flex-row flex-nowrap content-start items-center justify-start w-100 h-auto">
+			<a
+				class="font-semibold text-lg text-blue-700 hover:text-blue-800 underline uppercase"
+				href.one-way="job.link"
+				router-ignore
+				target="_blank">
+				${ job.title }
+			</a>
+			<a
+				route-href="route: edit-job; params.bind: { id: job.id };"
+				class="flex flex-row flex-nowrap content-center items-center justify-center w-4 h-4 ml-2 border-black border-solid border bg-white hover:bg-purple-200 rounded"
+				if.bind="job.user_id === userId">
+				<svg
+					class="w-4 h-4"
+					title="Edit job"
+					fill="#000000"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M0,0h24v24H0z"
+						fill="none" />
+					<path
+						d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+				</svg>
+			</a>
+		</div>
+		<p class="text-sm">${ job.description }</p>
+	</div>
+</template>

@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/no-array-for-each */
+/* eslint-disable unicorn/no-object-as-default-parameter, unicorn/no-null, unicorn/no-array-for-each */
 
 import { nextStateHistory } from "aurelia-store"
 
@@ -45,6 +45,105 @@ const actions = {
 		return nextStateHistory(state, {
 			...state.present,
 			userId: data,
+		})
+	},
+	setJobs: (state, { data = [], type = "full" }) => {
+		let jobs = null
+
+		if (type === "full") {
+			jobs = [...data]
+		}
+		else {
+			const currentJobs = [...state.present.jobs]
+			const newJobs = []
+
+			for (let index = (data.length - 1); index >= 0; index--) {
+				let found = false
+
+				for (let index_ = (currentJobs.length - 1); index_ >= 0; index_--) {
+					if (currentJobs[index_].id === data[index].id) {
+						found = true
+						currentJobs[index_] = { ...data[index] }
+
+						break
+					}
+				}
+
+				if (!found) {
+					newJobs.push(data[index])
+				}
+			}
+
+			jobs = [...currentJobs, ...newJobs]
+		}
+
+		return nextStateHistory(state, {
+			...state.present,
+			jobs,
+		})
+	},
+	setJobsLastUpdate: (state) => {
+		return nextStateHistory(state, {
+			...state.present,
+			jobsLastUpdate: Date.now(),
+		})
+	},
+	updateJob: (state, data = { id: 0 }) => {
+		const jobs = [...state.present.jobs]
+		const index = jobs
+			.reduce((accumulator, value, index) => {
+				return ((value.id === data.id) ? index : accumulator)
+			}, -1)
+
+		if (index === -1) {
+			return nextStateHistory(state, {
+				...state.present,
+			})
+		}
+
+		jobs[index] = { ...jobs[index], ...data }
+
+		return nextStateHistory(state, {
+			...state.present,
+			jobs,
+		})
+	},
+	deleteJob: (state, data = { id: 0 }) => {
+		const jobs = [...state.present.jobs]
+		const index = jobs
+			.reduce((accumulator, value, index) => {
+				return ((value.id === data.id) ? index : accumulator)
+			}, -1)
+
+		if (index === -1) {
+			return nextStateHistory(state, {
+				...state.present,
+			})
+		}
+
+		jobs.splice(index, 1)
+
+		return nextStateHistory(state, {
+			...state.present,
+			jobs,
+		})
+	},
+	toggleJobTitleValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isJobTitleValid: data,
+		})
+	},
+	toggleJobLinkValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isJobLinkValid: data,
+		})
+	},
+	toggleJobDescriptionValid: (state, data = false) => {
+		return nextStateHistory(state, {
+			...state.present,
+			isJobDescriptionValid: data,
 		})
 	},
 	// action: (state, data) => {
