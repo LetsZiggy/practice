@@ -34,6 +34,24 @@ Route.group(() => {
 	Route
 		.post("users/signout", "UserController.signout")
 		.middleware(["auth"])
+
+	Route
+		.get("jobs/list/:t?", "JobController.list")
+
+	Route
+		.post("jobs/new-job", "JobController.newJob")
+		.validator("Job")
+		.middleware(["auth"])
+
+	Route
+		.post("jobs/edit-job", "JobController.editJob")
+		.validator("Job")
+		.middleware(["auth"])
+
+	Route
+		.post("jobs/delete-job", "JobController.deleteJob")
+		.validator("Delete")
+		.middleware(["auth"])
 }).prefix("api")
 
 /* Must be final route */
