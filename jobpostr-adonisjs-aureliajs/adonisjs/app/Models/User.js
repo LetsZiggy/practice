@@ -20,6 +20,17 @@ class User extends Model {
 			}
 		})
 	}
+
+	/**
+	 * A hasMany relationship with Job.
+	 *
+	 * @method jobs
+	 *
+	 * @return {Object}
+	 */
+	jobs () {
+		return this.hasMany("App/Models/Job")
+	}
 }
 
 module.exports = User

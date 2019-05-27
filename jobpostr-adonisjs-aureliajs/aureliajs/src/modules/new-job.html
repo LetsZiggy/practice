@@ -1,3 +1,39 @@
 <template>
-	<h1>New Job</h1>
+	<main class="flex flex-row flex-nowrap content-center items-center justify-center w-full h-full bg-gray-100">
+		<section class="flex flex-col flex-nowrap content-center items-center justify-center w-2/5 p-4 bg-gray-200">
+			<header class="flex flex-row flex-nowrap content-center items-center self-start justify-start w-full">
+				<h1 class="font-semibold text-3xl text-gray-800 underline uppercase">New Job</h1>
+			</header>
+			<span
+				id="submit-error"
+				class="inline-block self-start pl-2 mb-1 text-sm text-red-500 invisible">
+			</span>
+			<form
+				id="new-job"
+				name="new-job"
+				class="flex flex-col flex-grow flex-nowrap content-start items-start justify-start w-full h-auto"
+				submit.delegate="submit($event)">
+				<input-text
+					class="flex flex-col flex-nowrap content-start items-start justify-start w-full p-2 mb-2"
+					elem-id.one-time="'title'">
+				</input-text>
+				<input-link
+					class="flex flex-col flex-nowrap content-start items-start justify-start w-full p-2 mb-2"
+					elem-id.one-time="'link'">
+				</input-link>
+				<input-text
+					class="flex flex-col flex-nowrap content-start items-start justify-start w-full p-2 mb-2"
+					elem-id.one-time="'description'">
+				</input-text>
+				<fieldset class="flex flex-row flex-nowrap content-center items-center justify-start w-full">
+					<input
+						id="submit"
+						class="p-2 mr-8 ml-auto text-gray-100 uppercase disabled:cursor-default cursor-pointer bg-gray-800 hover:bg-gray-700 disabled:bg-gray-600"
+						type="submit"
+						value="Confirm"
+						disabled.one-way="isDisabled" />
+				</fieldset>
+			</form>
+		</section>
+	</main>
 </template>

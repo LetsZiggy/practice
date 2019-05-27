@@ -35,6 +35,15 @@
 			<li
 				class="mr-8"
 				if.bind="isSignin">
+				<a
+					route-href="route: new-job;"
+					class="no-underline text-sm text-gray-400 hover:text-gray-100 uppercase">
+					New-Job
+				</a>
+			</li>
+			<li
+				class="mr-8"
+				if.bind="isSignin">
 				<button
 					class="no-underline text-sm text-gray-400 hover:text-gray-100 uppercase"
 					click.delegate="signout()">

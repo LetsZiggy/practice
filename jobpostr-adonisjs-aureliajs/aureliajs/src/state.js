@@ -6,4 +6,9 @@ export const initialState = {
 	isConfirmValid: false,
 	username: "",
 	userId: 0,
+	jobs: [],
+	jobsLastUpdate: 0,
+	isJobTitleValid: false,
+	isJobLinkValid: false,
+	isJobDescriptionValid: false,
 }
