@@ -145,6 +145,18 @@ const actions = {
 			isJobDescriptionValid: data,
 		})
 	},
+	setIdentifier: (state, data = 0) => {
+		return nextStateHistory(state, {
+			...state.present,
+			identifier: data,
+		})
+	},
+	setToken: (state, data = 0) => {
+		return nextStateHistory(state, {
+			...state.present,
+			token: data,
+		})
+	},
 	// action: (state, data) => {
 	// 	return nextStateHistory(state, {
 	// 		...state.present,
