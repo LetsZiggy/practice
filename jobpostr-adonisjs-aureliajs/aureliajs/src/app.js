@@ -16,6 +16,17 @@ export class App {
 		// registerActions(this.store, [
 		// 	{ name: "rehydrateFromLocalStorage", key: rehydrateFromLocalStorage },
 		// ])
+
+		window.addEventListener("unload", (event) => {
+			const data = new FormData()
+
+			data.append(
+				"token",
+				document.head.querySelector(`meta[name="token"]`).content,
+			)
+
+			navigator.sendBeacon("/api/users/end-session", data)
+		})
 	}
 
 	configureRouter (config, router) {

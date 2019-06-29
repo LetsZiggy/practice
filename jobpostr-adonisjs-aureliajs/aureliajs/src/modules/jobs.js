@@ -27,6 +27,10 @@ import { DEFAULT_RESPONSE_OBJECT, componentSignInInit, componentStateInit } from
 			pluck("present", "jobsLastUpdate"),
 			distinctUntilChanged(),
 		),
+		identifier: (store) => store.state.pipe(
+			pluck("present", "identifier"),
+			distinctUntilChanged(),
+		),
 	},
 })
 @inject(Router, Store, HTTP)
@@ -37,6 +41,7 @@ export class Jobs {
 		this.http = HTTP
 
 		registerActions(this.store, [
+			{ name: "setToken", key: "setToken" },
 			{ name: "setJobsLastUpdate", key: "setJobsLastUpdate" },
 			{ name: "setJobs", key: "setJobs" },
 		])
@@ -45,7 +50,7 @@ export class Jobs {
 	async canActivate (parameters, routeConfig, navigationInstruction) {
 		if (this.router.isNavigatingFirst || this.router.isNavigatingRefresh) {
 			await componentStateInit(this.store)
-			await componentSignInInit(this.store, this.http)
+			await componentSignInInit(this.store, this.http, this.identifier)
 		}
 
 		return true
@@ -74,6 +79,7 @@ export class Jobs {
 
 	canDeactivate () {
 		unregisterActions(this.store, [
+			{ key: "setToken" },
 			{ key: "setJobsLastUpdate" },
 			{ key: "setJobs" },
 		])

@@ -11,4 +11,6 @@ export const initialState = {
 	isJobTitleValid: false,
 	isJobLinkValid: false,
 	isJobDescriptionValid: false,
+	identifier: 0,
+	token: 0,
 }
