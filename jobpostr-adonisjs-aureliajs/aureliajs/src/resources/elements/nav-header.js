@@ -23,6 +23,7 @@ export class NavHeader {
 		this.http = HTTP
 
 		registerActions(this.store, [
+			{ name: "setIdentifier", key: "setIdentifier" },
 			{ name: "toggleIsSignin", key: "toggleIsSignin" },
 			{ name: "setUsername", key: "setUsername" },
 			{ name: "setUserId", key: "setUserId" },
@@ -31,6 +32,7 @@ export class NavHeader {
 
 	detached () {
 		unregisterActions(this.store, [
+			{ key: "setIdentifier" },
 			{ key: "toggleIsSignin" },
 			{ key: "setUsername" },
 			{ key: "setUserId" },
@@ -38,7 +40,9 @@ export class NavHeader {
 	}
 
 	async signout () {
-		await this.http.post({ url: "users/signout" })
+		const response = await this.http.post({ url: "users/signout" })
+
+		this.store.dispatch("setIdentifier", response.data.identifier)
 		this.store.dispatch("toggleIsSignin")
 		this.store.dispatch("setUsername")
 		this.store.dispatch("setUserId")
