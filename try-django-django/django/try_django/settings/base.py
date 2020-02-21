@@ -42,17 +42,17 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
-	# 1st-Party
+	### 1st-Party ###
 	"django.contrib.admin",
 	"django.contrib.auth",
 	"django.contrib.contenttypes",
 	"django.contrib.sessions",
 	"django.contrib.messages",
 	"django.contrib.staticfiles",
-	# 3rd-Party
+	### 3rd-Party ###
 	# ---PLACEHOLDER---
-	# Project
-	# ---PLACEHOLDER---
+	### Project ###
+	"products",
 ]
 
 MIDDLEWARE = [
