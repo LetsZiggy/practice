@@ -1,0 +1,9 @@
+<nav>
+	<ul style="list-style-type: none; margin: 0; padding: 0;">
+		{% for count in '123'|make_list %}
+			<li style="display: inline;">
+				<button>nav-{{count}}</button>
+			</li>
+		{% endfor %}
+	</ul>
+</nav>
