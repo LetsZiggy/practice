@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.title|capfirst }} - {% endblock title %}
+
+{% block content %}
+	<p>
+		<a href="{% url 'products:list' %}">
+			Back to list
+		</a>
+	</p>
+	<p>
+		Name: {{ product.title|capfirst }}
+	</p>
+	<p>
+		Price: ${{ product.price }}
+	</p>
+	<p>
+		Description:
+		<br>
+		{% if product.description %}
+			{{ product.description }}
+		{% else %}
+			No description available
+		{% endif %}
+	</p>
+	{% if user.is_staff %}
+		<p>
+			<a href="{% url 'products:update' product.id %}">
+				Update item
+			</a>
+			|
+			<a href="{% url 'products:delete' product.id %}">
+				Delete item
+			</a>
+		</p>
+	{% endif %}
+{% endblock content %}
