@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.title|capfirst }} - {% endblock title %}
+
+{% block content %}
+	<form action="." method="POST">
+		{% csrf_token %}
+		<h3>Do you want to remove {{ product.title }}?</h3>
+		<p>
+			<input type="submit" value="Yes">
+			{# <a href="../">No</a> #}
+			<a href="{% url 'products:detail' product.id %}">No</a>
+		</p>
+	</form>
+{% endblock content %}
