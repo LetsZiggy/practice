@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title|capfirst }} - {% endblock title %}
+
+{% block content %}
+	<h1>CONTACT VIEW</h1>
+	<h3>Contacts</h3>
+	<ul style="margin: 0; padding: 0;">
+		{% for contact in contacts %}
+			<li>
+				{% if forloop.counter == 1 %}
+					First
+				{% elif forloop.counter == contacts|length %}
+					Last
+				{% else %}
+					{{ forloop.counter|add:100 }}
+				{% endif %}
+				 - {{ contact }}
+			</li>
+		{% empty %}
+			<li>
+				THERE IS NO CONTACT
+			</li>
+		{% endfor %}
+	</ul>
+{% endblock content %}
