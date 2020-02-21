@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title|capfirst }} - {% endblock title %}
+
+{% block content %}
+	<p>
+		<a href="{% url 'products:create' %}">New product</a>
+	</p>
+	{% if object_list|length %}
+		{% for instance in object_list %}
+			<p>
+				<a href="{{ instance.get_absolute_url }}">
+					Name: {{ instance.title|capfirst }}
+				</a>
+			</p>
+			<p>
+				Price: ${{ instance.price }}
+			</p>
+			<p>
+				{{ instance.summary }}
+			</p>
+			{% if forloop.counter != object_list|length %}
+				<hr>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<p>
+			No products added yet
+		</p>
+	{% endif %}
+{% endblock content %}
