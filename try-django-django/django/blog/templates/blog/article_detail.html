@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title|capfirst }} - {% endblock title %}
+
+{% block content %}
+	<p>
+		<a href="{% url 'blog:list' %}">
+			Back to list
+		</a>
+	</p>
+	<p>
+		{{ article.title|capfirst }}
+		<br>
+		By: {{ article.author }} | {{ article.revised|date:"j/n/Y" }}
+	</p>
+	<p>
+		{{ article.content }}
+	</p>
+	{% if user.is_staff %}
+		<p>
+			<a href="{% url 'blog:update' article.id %}">
+				Update article
+			</a>
+			|
+			<a href="{% url 'blog:delete' article.id %}">
+				Delete article
+			</a>
+		</p>
+	{% endif %}
+{% endblock content %}
