@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title|capfirst }} - {% endblock title %}
+
+{% block content %}
+	{% if user.is_staff %}
+		<p>
+			<a href="{% url 'blog:create' %}">New article</a>
+		</p>
+	{% endif %}
+	{% if object_list|length %}
+		{% for instance in object_list %}
+			{% if instance.publish %}
+				<p>
+					<a href="{{ instance.get_absolute_url }}">
+						{{ instance.title|capfirst }}
+					</a>
+					<br>
+					By: {{ instance.author }} | {{ instance.revised|date:"j/n/Y" }}
+				</p>
+				<p>
+					{{ instance.summary }}
+				</p>
+				{% if forloop.counter != object_list|length %}
+					<hr>
+				{% endif %}
+			{% endif %}
+			{% if not instance.publish and user.is_staff %}
+				<p>
+					<a href="{{ instance.get_absolute_url }}">
+						(DRAFT) {{ instance.title|capfirst }}
+					</a>
+					<br>
+					By: {{ instance.author }} | {{ instance.revised|date:"j/n/Y" }}
+				</p>
+				<p>
+					{{ instance.summary }}
+				</p>
+				{% if forloop.counter != object_list|length %}
+					<hr>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<p>
+			No articles published yet
+		</p>
+	{% endif %}
+{% endblock content %}
