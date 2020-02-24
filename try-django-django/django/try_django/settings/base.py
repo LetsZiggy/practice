@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 	### Project ###
 	"products",
 	"pages",
+	"blog",
 ]
 
 MIDDLEWARE = [

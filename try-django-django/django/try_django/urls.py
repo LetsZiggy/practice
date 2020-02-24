@@ -30,4 +30,6 @@ urlpatterns = [
 	path("contact/", contact_view, name="contact"),
 	### products ###
 	path("products/", include("products.urls")),
+	### blog ###
+	path("blog/", include("blog.urls")),
 ]
