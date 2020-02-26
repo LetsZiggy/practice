@@ -36,3 +36,5 @@ Thumbs.db
 !pnpm-workspace.yaml
 !prettier.config.js
 !README.md
+
+!poll-application-django/
