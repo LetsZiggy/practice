@@ -1,0 +1,67 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "root",
+			"folder_exclude_patterns": [".svn", ".git", ".hg", "CVS", "django", "django-polls"],
+			"follow_symlinks": true,
+		},
+		{
+			"path": "django",
+			"name": "django",
+			"folder_exclude_patterns": ["__pycache__", "venv"],
+			"follow_symlinks": true,
+		},
+		{
+			"path": "django-polls",
+			"name": "django-polls",
+			"folder_exclude_patterns": ["__pycache__", "venv"],
+			"follow_symlinks": true,
+		},
+	],
+	"settings": {
+		/* "default_encoding": "UTF-8", */
+		/* "default_line_ending": "unix", */
+		"detect_indentation": true,
+		/* "ensure_newline_at_eof_on_save": true, */
+		"show_definitions": false,
+		"show_line_endings": true,
+		/* "tab_size": 2, */
+		/* "translate_tabs_to_spaces": false, */
+		/* "trim_trailing_white_space_on_save": "all", */
+		"use_tab_stops": true,
+		"word_wrap": true,
+
+		/* LSP */
+		"lsp_format_on_save": true,
+		"lsp_code_actions_on_save": {
+			"source.fixAll.json": false,
+			"source.fixAll.ruff": true,
+			"source.organizeImports.ruff": false,
+		},
+
+		"LSP": {
+			/* LSP-basedpyright */
+			"LSP-basedpyright": {
+				"enabled": true,
+				"settings": {
+					"python.pythonPath": "${project_path}/django/venv/bin/python",
+					"python.venvPath": "${project_path}/django/venv",
+					"basedpyright.disableOrganizeImports": true,
+				},
+			},
+
+			/* LSP-ruff */
+			"LSP-ruff": {
+				"enabled": true,
+				"initializationOptions": {
+					"settings": {
+						"configuration": "${project_path}/django/pyproject.toml",
+					},
+				},
+			},
+		},
+	},
+
+	"debugger_configurations": [],
+}
