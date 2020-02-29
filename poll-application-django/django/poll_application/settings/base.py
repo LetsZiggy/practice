@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 	### 3rd-Party ###
 	# ---PLACEHOLDER---
 	### Project ###
-	# ---PLACEHOLDER---
+	"polls.apps.PollsConfig",
 ]
 
 MIDDLEWARE = [
