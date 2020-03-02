@@ -1,0 +1,7 @@
+body {
+	background: url("images/background.png") top right / 50px no-repeat white;
+}
+
+li a {
+	color: green;
+}
