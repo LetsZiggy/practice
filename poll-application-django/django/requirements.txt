@@ -2,4 +2,6 @@
 #black @ git+https://github.com/LetsZiggy/black.git@indent-tab
 
 Django~=2.2
+#django-polls~=0.1
 python-decouple
+setuptools
