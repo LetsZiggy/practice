@@ -1,0 +1,107 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "adonisjs",
+			"folder_exclude_patterns": [
+				".svn",
+				".git",
+				".hg",
+				"CVS",
+				"node_modules",
+				"vendor",
+				".env",
+				"env",
+				".venv",
+				"venv",
+				".env.bak",
+				"env.bak",
+				".venv.bak",
+				"venv.bak",
+				"ENV",
+				"__pycache__",
+
+				"public",
+				"scripts",
+			],
+			"follow_symlinks": true,
+		},
+	],
+	"settings": {
+		/* "default_encoding": "UTF-8", */
+		/* "default_line_ending": "unix", */
+		"detect_indentation": true,
+		/* "ensure_newline_at_eof_on_save": true, */
+		"show_definitions": false,
+		"show_line_endings": true,
+		/* "tab_size": 2, */
+		/* "translate_tabs_to_spaces": false, */
+		/* "trim_trailing_white_space_on_save": "all", */
+		"use_tab_stops": true,
+		"word_wrap": true,
+
+		/* JsPrettier */
+		"js_prettier": {
+			"debug": false,
+			"auto_format_on_save": true,
+			// "auto_format_on_save_excludes": [],
+			"auto_format_on_save_requires_prettier_config": true,
+			"allow_inline_formatting": true,
+			"additional_cli_args": {
+				"--config": "${project_path}/prettier.config.js",
+				"--config-precedence": "prefer-file",
+				"--ignore-path": "${project_path}/.prettierignore",
+			},
+		},
+
+		/* LSP */
+		"lsp_format_on_save": true,
+		"lsp_code_actions_on_save": {
+			"source.fixAll.eslint": true,
+			"source.fixAll.json": false,
+		},
+
+		"LSP": {
+			/* LSP-eslint */
+			"LSP-eslint": {
+				"enabled": true,
+				"settings": {
+					"options": {
+						"overrideConfigFile": "${project_path}/eslint.config.js",
+					},
+					"probe": ["javascript"],
+					"validate": ["javascript"],
+					"workingDirectories": [
+						"${project_path}",
+						"${project_path}/app",
+						"${project_path}/commands",
+						"${project_path}/config",
+						"${project_path}/contracts",
+						"${project_path}/providers",
+						"${project_path}/resources",
+						"${project_path}/start",
+						"${project_path}/tests",
+					],
+				},
+				"selector": "source.js",
+			},
+		},
+
+		"project_syntaxes": [
+			{
+				"syntax": "Aurelia/aurelia-html-v1",
+				"rules": [
+					{ "globmatch": "**/*.{edge,html}" },
+				],
+			},
+			{
+				"syntax": "Tailwind CSS/Tailwind CSS",
+				"rules": [
+					{ "globmatch": "**/*.css" },
+				],
+			},
+		],
+	},
+
+	"debugger_configurations": [],
+}
