@@ -32,3 +32,4 @@ Thumbs.db
 # root
 /*
 !poll-application-django/
+!try-django-django/
