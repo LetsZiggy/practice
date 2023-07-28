@@ -1,0 +1,51 @@
+#$schema: 'https://taskfile.dev/schema.json'
+
+version: '3'
+
+silent: true
+
+tasks:
+  db:up:
+    desc: task db:up
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/database
+        docker compose up --remove-orphans --build --detach
+        cd "$CURRENT_DIR"
+
+  db:down:
+    desc: task db:down
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/database
+        docker compose down --remove-orphans --rmi=local
+        cd "$CURRENT_DIR"
+
+  server:build:
+    desc: task server:build
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/adonisjs
+        pnpm run ace:migration:run && pnpm run ace:build
+        cd "$CURRENT_DIR"
+
+  server:dev:
+    desc: task server:dev
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/adonisjs
+        pnpm run ace:migration:run && pnpm run ace:dev
+        cd "$CURRENT_DIR"
+
+  server:test:
+    desc: task server:test
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/adonisjs
+        pnpm run ace:test
+        cd "$CURRENT_DIR"
