@@ -1,0 +1,52 @@
+# --------------- --------------- --------------- #
+
+networks:
+
+  database-network:
+
+# --------------- --------------- --------------- #
+
+# volumes:
+
+# --------------- --------------- --------------- #
+
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - database-network
+    ports:
+      - 5432:5432
+    env_file:
+      - development.env
+    # user: "$(id -u):$(id -g)" # https://github.com/docker-library/docs/blob/master/postgres/README.md#arbitrary---user-notes
+
+  # pgadmin:
+  #   container_name: pgadmin
+  #   depends_on:
+  #     - postgres
+  #   image: dpage/pgadmin4:latest
+  #   networks:
+  #     - database-network
+  #   ports:
+  #     - 5050:80
+  #     # - 5051:443
+  #   env_file:
+  #     - development.env
+
+  adminer:
+    container_name: adminer
+    depends_on:
+      - postgres
+    image: adminer:latest
+    networks:
+      - database-network
+    ports:
+      - 5433:8080
+    env_file:
+      - development.env
