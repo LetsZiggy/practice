@@ -1,0 +1,58 @@
+{
+	"extends": "adonis-preset-ts/tsconfig.json",
+	"include": [".*.js", ".*.ts", "**/*"],
+	"exclude": ["build", "node_modules"],
+	"compilerOptions": {
+		"exactOptionalPropertyTypes": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"strict": true,
+		"strictPropertyInitialization": false,
+
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"rootDir": ".",
+		"baseUrl": ".",
+		"paths": {
+			"App/*": ["app/*"],
+			"Config/*": ["config/*"],
+			"Contracts/*": ["contracts/*"],
+			"Database/*": ["database/*"]
+		},
+		"types": [
+			"node",
+			"@adonisjs/core",
+			"@adonisjs/repl",
+			"@adonisjs/session",
+			"@adonisjs/view",
+			"@adonisjs/shield",
+			"@adonisjs/lucid",
+			"@japa/preset-adonis/build/adonis-typings",
+			"@total-typescript/ts-reset",
+			"./resources/js/htmx.d.ts"
+		],
+
+		"outDir": "build",
+		"sourceMap": true,
+
+		"allowJs": true,
+		"checkJs": false,
+
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"lib": ["ES2021", "DOM", "DOM.Iterable"],
+
+		"incremental": true,
+		"tsBuildInfoFile": ".tsbuildinfo",
+
+		"skipLibCheck": true
+	}
+}

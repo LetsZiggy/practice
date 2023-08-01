@@ -1,0 +1,17 @@
+.git
+.svn
+.hg
+CVS
+node_modules
+
+public
+scripts
+
+.*.js
+.*.ts
+*.js
+*.ts
+*.json
+*.yaml
+*.sublime-project
+*.sublime-workspace

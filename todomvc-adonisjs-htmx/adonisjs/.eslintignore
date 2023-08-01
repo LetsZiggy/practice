@@ -1,0 +1,11 @@
+.git
+.svn
+.hg
+CVS
+node_modules
+
+public
+build
+
+!.*.js
+!.*.ts
