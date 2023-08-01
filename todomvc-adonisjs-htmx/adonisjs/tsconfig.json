@@ -1,0 +1,93 @@
+{
+	"extends": "adonis-preset-ts/tsconfig.json",
+	"include": [".*.js", ".*.cjs", ".*.mjs", ".*.ts", "*.js", "*.cjs", "*.mjs", "*.ts", "**/*"],
+	"exclude": [
+		"bower_components",
+		"jspm_packages",
+		"node_modules",
+		"vendor",
+		".env",
+		"env",
+		".venv",
+		"venv",
+		".env.bak",
+		"env.bak",
+		".venv.bak",
+		"venv.bak",
+		"ENV",
+		"__pycache__",
+		"build"
+	],
+	"compilerOptions": {
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"alwaysStrict": true,
+		"exactOptionalPropertyTypes": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"strict": true,
+		"strictBindCallApply": true,
+		"strictBuiltinIteratorReturn": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": false,
+		"useUnknownInCatchVariables": true,
+
+		"baseUrl": "./",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"paths": {
+			"App/*": ["app/*"],
+			"Config/*": ["config/*"],
+			"Contracts/*": ["contracts/*"],
+			"Database/*": ["database/*"]
+		},
+		"resolveJsonModule": true,
+		"rootDir": "./",
+		"types": [
+			"node",
+			"@adonisjs/core",
+			"@adonisjs/repl",
+			"@adonisjs/session",
+			"@adonisjs/view",
+			"@adonisjs/shield",
+			"@adonisjs/lucid",
+			"@japa/preset-adonis/build/adonis-typings",
+			"./resources/js/htmx.d.ts"
+		],
+
+		"declaration": false,
+		"importHelpers": true,
+		"outDir": "build",
+		"removeComments": true,
+		"sourceMap": true,
+
+		"allowJs": true,
+		"checkJs": true,
+
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"verbatimModuleSyntax": false,
+
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"moduleDetection": "auto",
+		"target": "es2020",
+
+		"incremental": true,
+		"tsBuildInfoFile": ".tsbuildinfo",
+
+		"skipLibCheck": true
+	},
+	"$schema": "https://json.schemastore.org/tsconfig"
+}
