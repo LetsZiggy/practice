@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		@!include("partials/html_head")
+	</head>
+	<body>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				@!include("partials/new_todo")
+			</header>
+			<section class="main">
+				@!component("components/toggle_all", { incompletedIds, showToggleAll })
+				@!component("components/todo_list", { todos })
+			</section>
+			@!component("components/todo_list_footer", { completedIds, incompletedIds, referrer, todos })
+		</section>
+		@!include("partials/info_footer")
+	</body>
+</html>
