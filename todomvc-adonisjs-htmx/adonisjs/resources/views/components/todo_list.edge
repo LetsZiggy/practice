@@ -1,0 +1,81 @@
+<ul class="todo-list">
+	@each(todo in todos)
+	<li class="{{ todo.isCompleted ? 'completed' : '' }}">
+		<div class="view">
+			@if(todo.isCompleted)
+			<input
+				checked
+				class="toggle pointer"
+				type="checkbox"
+				value="{{ todo.id }}" />
+			@else
+			<input
+				class="toggle pointer"
+				type="checkbox"
+				value="{{ todo.id }}" />
+			@end
+			<label
+				class="edit-label pointer no-select"
+				data-todo="{{ todo.todo }}">
+				{{ todo.todo }}
+			</label>
+			<button
+				class="destroy pointer"
+				type="button"
+				value="{{ todo.id }}"></button>
+		</div>
+		<input
+			class="edit"
+			maxlength="255"
+			minlength="1"
+			name="todo-{{ todo.id }}"
+			placeholder="What needs to be done?"
+			required
+			type="text"
+			value="{{ todo.todo }}" />
+	</li>
+	@end
+</ul>
+<form
+	action="/toggle"
+	id="form-toggle"
+	method="POST"
+	name="form-toggle">
+	<input
+		form="form-toggle"
+		name="todo-id"
+		type="hidden"
+		value="" />
+	<input
+		form="form-toggle"
+		name="todo-is-completed"
+		type="hidden"
+		value="" />
+</form>
+<form
+	action="/edit-todo"
+	id="form-edit-todo"
+	method="POST"
+	name="form-edit-todo">
+	<input
+		form="form-edit-todo"
+		name="todo-id"
+		type="hidden"
+		value="" />
+	<input
+		form="form-edit-todo"
+		name="todo-text"
+		type="hidden"
+		value="" />
+</form>
+<form
+	action="/destroy"
+	id="form-destroy"
+	method="POST"
+	name="form-destroy">
+	<input
+		form="form-destroy"
+		name="todo-id"
+		type="hidden"
+		value="" />
+</form>
