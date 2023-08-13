@@ -1,0 +1,23 @@
+<form
+	action="/toggle-all"
+	class="{{ showToggleAll ? '' : 'hidden' }}"
+	id="form-toggle-all"
+	method="POST"
+	name="form-toggle-all">
+	<input
+		form="form-toggle-all"
+		name="incompleted-ids"
+		type="hidden"
+		value="{{ incompletedIds.join() }}" />
+	<input
+		class="toggle-all"
+		form="form-toggle-all"
+		id="input-toggle-all"
+		name="toggle-all"
+		type="submit" />
+	<label
+		class="pointer"
+		for="input-toggle-all">
+		Mark all as complete
+	</label>
+</form>
