@@ -1,0 +1,5 @@
+<footer class="footer {{ referrer === '' && todos.length === 0 ? 'hidden' : '' }}">
+	@!component("components/todo_count", { incompletedIds })
+	@!component("components/filters", { referrer })
+	@!component("components/destroy_completed", { completedIds })
+</footer>

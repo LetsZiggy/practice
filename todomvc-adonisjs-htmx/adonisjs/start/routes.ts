@@ -20,4 +20,12 @@
 
 import Route from "@ioc:Adonis/Core/Route"
 
-Route.get("/", async ({ view }) => view.render("index"))
+Route.get("/", "TodosController.index")
+Route.get("/active", "TodosController.index")
+Route.get("/completed", "TodosController.index")
+Route.post("/new-todo", "TodosController.newTodo")
+Route.post("/edit-todo", "TodosController.editTodo")
+Route.post("/toggle", "TodosController.toggle")
+Route.post("/toggle-all", "TodosController.toggleAll")
+Route.post("/destroy", "TodosController.destroy")
+Route.post("/destroy-completed", "TodosController.destroyCompleted")

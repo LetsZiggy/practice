@@ -1,0 +1,23 @@
+<ul class="filters">
+	<li>
+		<a
+			class="{{ referrer === '' ? 'selected' : '' }}"
+			href="/">
+			All
+		</a>
+	</li>
+	<li>
+		<a
+			class="{{ referrer === 'active' ? 'selected' : '' }}"
+			href="/active">
+			Active
+		</a>
+	</li>
+	<li>
+		<a
+			class="{{ referrer === 'completed' ? 'selected' : '' }}"
+			href="/completed">
+			Completed
+		</a>
+	</li>
+</ul>
