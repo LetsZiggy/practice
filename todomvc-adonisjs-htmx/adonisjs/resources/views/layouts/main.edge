@@ -5,15 +5,9 @@
 	</head>
 	<body>
 		<section class="todoapp">
-			<header class="header">
-				<h1>todos</h1>
-				@!include("partials/new_todo")
-			</header>
-			<section class="main">
-				@!component("components/toggle_all", { incompletedIds, showToggleAll })
-				@!component("components/todo_list", { todos })
-			</section>
-			@!component("components/todo_list_footer", { completedIds, incompletedIds, referrer, todos })
+			@!component("components/todo_list_header", { incompletedIds, todos })
+			@!component("components/todo_list_body", { incompletedIds, showToggleAll, todos })
+			@!component("components/todo_list_footer", { incompletedIds, referrer, todos })
 		</section>
 		@!include("partials/info_footer")
 	</body>
