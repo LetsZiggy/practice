@@ -1,5 +1,8 @@
-<footer class="footer {{ referrer === '' && todos.length === 0 ? 'hidden' : '' }}">
+<footer
+	class="footer {{ referrer === '' && todos.length === 0 ? 'hidden' : '' }}"
+	hx-swap-oob="outerHTML"
+	id="todo-list-footer">
 	@!component("components/todo_count", { incompletedIds })
 	@!component("components/filters", { referrer })
-	@!component("components/destroy_completed", { completedIds })
+	@!component("components/destroy_completed")
 </footer>
