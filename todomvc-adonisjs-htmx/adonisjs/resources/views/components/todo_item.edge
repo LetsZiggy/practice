@@ -1,0 +1,61 @@
+@set("isEditingTodo", editing?.id === todo.id)
+@set("isInput", editing?.t === "input")
+
+<li
+	class="{{ todo.isCompleted ? 'completed' : '' }} {{  isEditingTodo && isInput ? 'editing' : '' }}"
+	id="todo-{{ todo.id }}">
+	@if(isEditingTodo && isInput)
+	<input
+		autofocus
+		class="edit"
+		data-id="{{ todo.id }}"
+		data-todo="{{ todo.todo }}"
+		id="edit-{{ todo.id }}"
+		maxlength="255"
+		minlength="1"
+		name="value"
+		placeholder="What needs to be done?"
+		required
+		type="text"
+		value="{{ todo.todo }}" />
+	@else
+	<div class="view">
+		@if(todo.isCompleted)
+		<input
+			checked
+			class="toggle pointer"
+			hx-patch="/toggle/{{ todo.id }}"
+			hx-swap="outerHTML"
+			hx-target="#todo-{{ todo.id }}"
+			hx-trigger="change"
+			name="todo-is-completed"
+			type="checkbox" />
+		@else
+		<input
+			class="toggle pointer"
+			hx-patch="/toggle/{{ todo.id }}"
+			hx-swap="outerHTML"
+			hx-target="#todo-{{ todo.id }}"
+			hx-trigger="change"
+			name="todo-is-completed"
+			type="checkbox" />
+		@end
+		<label
+			class="edit-label pointer no-select"
+			hx-get="/edit-todo/{{ todo.id }}?t=input"
+			hx-swap="outerHTML"
+			hx-target="#todo-{{ todo.id }}"
+			hx-trigger="dblclick">
+			{{ todo.todo }}
+		</label>
+		<button
+			class="destroy pointer"
+			hx-delete="/destroy/{{ todo.id }}"
+			hx-swap="outerHTML"
+			hx-target="#todo-{{ todo.id }}"
+			hx-trigger="click"
+			name="todo-destroy"
+			type="button"></button>
+	</div>
+	@end
+</li>

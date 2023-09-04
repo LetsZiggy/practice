@@ -1,0 +1,12 @@
+@set("hiddenInCompleted", referrer === "completed")
+
+@if(hiddenInCompleted)
+<li
+	class="hidden"
+	id="todo-{{ todo.id }}"></li>
+@else
+@!component("components/todo_item", { todo })
+@end
+
+@!component("components/toggle_all", { incompletedIds, showToggleAll })
+@!component("components/todo_list_footer", { incompletedIds, referrer, todos })

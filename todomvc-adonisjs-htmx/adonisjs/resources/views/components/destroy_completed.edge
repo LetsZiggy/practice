@@ -1,22 +1,11 @@
-<form
-	action="/destroy-completed"
-	id="form-destroy-completed"
-	method="POST"
-	name="form-destroy">
-	<input
-		form="form-destroy-completed"
-		name="completed-ids"
-		type="hidden"
-		value="{{ completedIds.join() }}" />
-	<input
-		class="clear-completed hidden"
-		form="form-destroy-completed"
-		id="input-destroy-completed"
-		name="destroy-completed"
-		type="{{ completedIds.length > 0 ? 'submit' : 'button' }}" />
-	<label
-		class="clear-completed"
-		for="input-destroy-completed">
-		Clear complete
-	</label>
-</form>
+<input
+	class="clear-completed hidden"
+	hx-post="/destroy-completed"
+	id="destroy-completed"
+	name="destroy-completed"
+	type="button" />
+<label
+	class="clear-completed"
+	for="destroy-completed">
+	Clear complete
+</label>
