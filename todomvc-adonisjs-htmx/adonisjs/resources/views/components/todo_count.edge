@@ -1,3 +1,6 @@
-<span class="todo-count">
+<span
+	class="todo-count"
+	hx-swap-oob="outerHTML"
+	id="todo-count">
 	<strong>{{ incompletedIds.length }}</strong> item{{ incompletedIds.length !== 1 ? "s" : "" }} left
 </span>

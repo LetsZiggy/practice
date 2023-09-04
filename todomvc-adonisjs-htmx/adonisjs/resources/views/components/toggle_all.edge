@@ -1,23 +1,17 @@
-<form
-	action="/toggle-all"
+<div
 	class="{{ showToggleAll ? '' : 'hidden' }}"
-	id="form-toggle-all"
-	method="POST"
-	name="form-toggle-all">
-	<input
-		form="form-toggle-all"
-		name="incompleted-ids"
-		type="hidden"
-		value="{{ incompletedIds.join() }}" />
+	hx-swap-oob="outerHTML"
+	id="toggle-all-wrapper">
 	<input
 		class="toggle-all"
-		form="form-toggle-all"
-		id="input-toggle-all"
+		hx-post="/toggle-all"
+		hx-vals='{ "incompletedIds": "{{ incompletedIds.join() }}" }'
+		id="toggle-all"
 		name="toggle-all"
-		type="submit" />
+		type="button" />
 	<label
 		class="pointer"
-		for="input-toggle-all">
+		for="toggle-all">
 		Mark all as complete
 	</label>
-</form>
+</div>
