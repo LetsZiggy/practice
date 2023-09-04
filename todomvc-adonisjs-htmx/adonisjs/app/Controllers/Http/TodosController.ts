@@ -3,55 +3,42 @@ import Todo from "App/Models/Todo"
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext"
 
 export default class TodosController {
-	public async destroy ({ request, response }: HttpContextContract): Promise<void> {
-		const form = request.body()
-		const todo = await Todo.findOrFail(Number(form["todo-id"]))
+	public async destroy ({ params, request, response, view }: HttpContextContract): Promise<void> {
+		const id = Number(params["id"])
+		const todo = await Todo.findOrFail(id)
 
 		await todo.delete()
 
-		response.redirect().back()
-	}
-
-	public async destroyCompleted ({ request, response }: HttpContextContract): Promise<void> {
-		const form = request.body()
-		const completedIds: string[] = form["completed-ids"]?.split(",") ?? []
-
-		if (completedIds.length > 0) {
-			await Todo
-				.query()
-				.whereIn("id", completedIds)
-				.delete()
-		}
-
-		response.redirect().back()
-	}
-
-	public async editTodo ({ request, response }: HttpContextContract): Promise<void> {
-		const form = request.body()
-		const todo = await Todo.findOrFail(Number(form["todo-id"]))
-
-		todo.todo = form["todo-text"]
-		await todo.save()
-
-		response.redirect().back()
-	}
-
-	public async index ({ routeKey, view }: HttpContextContract): Promise<string> {
-		let todos = await Todo.all()
-		const completedIds: number[] = []
-		const incompletedIds: number[] = []
-		const referrer = routeKey.split("/")[1] ?? ""
+		const todos = await Todo.all()
+		const incompletedIds = todos
+			.filter((element) => !element.isCompleted)
+			.map((element) => element.id)
+		const referrer = request
+			.header("referrer")
+			?.split("/")
+			.at(-1) ?? ""
 		const showToggleAll = todos.length > 0
 
-		for (const element of todos) {
-			if (!element.isCompleted) {
-				incompletedIds.push(element.id)
-			}
+		response
+			.status(200)
+			.send(await view.render("destroy", { incompletedIds, referrer, showToggleAll, todos }))
+	}
 
-			if (element.isCompleted) {
-				completedIds.push(element.id)
-			}
-		}
+	public async destroyCompleted ({ request, view }: HttpContextContract): Promise<string> {
+		await Todo
+			.query()
+			.where("is_completed", "=", "TRUE")
+			.delete()
+
+		let todos = await Todo.all()
+		const incompletedIds = todos
+			.filter((element) => !element.isCompleted)
+			.map((element) => element.id)
+		const referrer = request
+			.header("referrer")
+			?.split("/")
+			.at(-1) ?? ""
+		const showToggleAll = todos.length > 0
 
 		if (referrer === "active") {
 			todos = todos
@@ -62,42 +49,121 @@ export default class TodosController {
 				.filter((element) => element.isCompleted)
 		}
 
-		return await view.render("index", { completedIds, incompletedIds, referrer, showToggleAll, todos })
+		return await view.render("destroy_completed", { incompletedIds, referrer, showToggleAll, todos })
 	}
 
-	public async newTodo ({ request, response }: HttpContextContract): Promise<void> {
-		const form = request.body()
+	public async editTodoSwap ({ params, request, view }: HttpContextContract): Promise<string> {
+		const element = request.qs()["t"]
+		const id = Number(params["id"])
+		const editing = { id, t: element }
+		const todo = await Todo.findOrFail(id)
 
-		if (typeof form["todo"] === "string" && form["todo"].length > 0) {
-			const todo = new Todo()
+		return await view.render("components/todo_item", { editing, todo })
+	}
 
-			todo.todo = form["todo"]
+	public async editTodoUpdate ({ params, request, view }: HttpContextContract): Promise<string> {
+		const value = request.body()["value"]
+		const id = Number(params["id"])
+		const editing = { id }
+		const todo = await Todo.findOrFail(id)
+
+		if (typeof value === "string" && value !== todo.todo && value.length > 0) {
+			todo.todo = value
 			await todo.save()
 		}
 
-		response.redirect().back()
+		return await view.render("components/todo_item", { editing, todo })
 	}
 
-	public async toggle ({ request, response }: HttpContextContract): Promise<void> {
-		const form = request.body()
-		const isCompleted = form["todo-is-completed"] === "true"
-		const todo = await Todo.findOrFail(Number(form["todo-id"]))
+	public async index ({ routeKey, view }: HttpContextContract): Promise<string> {
+		let todos = await Todo.all()
+		const incompletedIds = todos
+			.filter((element) => !element.isCompleted)
+			.map((element) => element.id)
+		const referrer = routeKey.split("/")[1] ?? ""
+		const showToggleAll = todos.length > 0
+
+		if (referrer === "active") {
+			todos = todos
+				.filter((element) => !element.isCompleted)
+		}
+		else if (referrer === "completed") {
+			todos = todos
+				.filter((element) => element.isCompleted)
+		}
+
+		return await view.render("index", { incompletedIds, referrer, showToggleAll, todos })
+	}
+
+	public async newTodo ({ request, view }: HttpContextContract): Promise<string> {
+		const value = request.body()["value"]
+		const newTodo = new Todo()
+
+		if (typeof value === "string" && value.length > 0) {
+			newTodo.todo = value
+			await newTodo.save()
+		}
+
+		let todos = await Todo.all()
+		const incompletedIds = todos
+			.filter((element) => !element.isCompleted)
+			.map((element) => element.id)
+		const referrer = request
+			.header("referrer")
+			?.split("/")
+			.at(-1) ?? ""
+		const showToggleAll = todos.length > 0
+
+		if (referrer === "active") {
+			todos = todos
+				.filter((element) => !element.isCompleted)
+		}
+		else if (referrer === "completed") {
+			todos = todos
+				.filter((element) => element.isCompleted)
+		}
+
+		return await view.render("new_todo", { incompletedIds, referrer, showToggleAll, todo: newTodo, todos })
+	}
+
+	public async toggle ({ params, request, view }: HttpContextContract): Promise<string> {
+		const id = Number(params["id"])
+		const isCompleted = request.body()["todo-is-completed"] === "on"
+		const todo = await Todo.findOrFail(id)
 
 		todo.isCompleted = isCompleted
 		await todo.save()
 
-		response.redirect().back()
+		let todos = await Todo.all()
+		const incompletedIds = todos
+			.filter((element) => !element.isCompleted)
+			.map((element) => element.id)
+		const referrer = request
+			.header("referrer")
+			?.split("/")
+			.at(-1) ?? ""
+		const showToggleAll = todos.length > 0
+
+		if (referrer === "active") {
+			todos = todos
+				.filter((element) => !element.isCompleted)
+		}
+		else if (referrer === "completed") {
+			todos = todos
+				.filter((element) => element.isCompleted)
+		}
+
+		return await view.render("toggle_todo", { incompletedIds, referrer, showToggleAll, todo, todos })
 	}
 
-	public async toggleAll ({ request, response }: HttpContextContract): Promise<void> {
-		const form = request.body()
-		const incompletedIds: string[] = form["incompleted-ids"]?.split(",") ?? []
+	public async toggleAll ({ request, view }: HttpContextContract): Promise<string> {
+		const currentIncompletedIds: number[] = request.body()["incompletedIds"]?.split(",").map(Number) ?? []
 
 		await (
-			(incompletedIds.length > 0)
+			(currentIncompletedIds.length > 0)
 				? Todo
 						.query()
-						.whereIn("id", incompletedIds)
+						.whereIn("id", currentIncompletedIds)
 						.update({ updatedAt: DateTime.local(), isCompleted: true })
 				: Todo
 					.query()
@@ -105,6 +171,25 @@ export default class TodosController {
 					.update({ updatedAt: DateTime.local(), isCompleted: false })
 		)
 
-		response.redirect().back()
+		let todos = await Todo.all()
+		const incompletedIds = todos
+			.filter((element) => !element.isCompleted)
+			.map((element) => element.id)
+		const referrer = request
+			.header("referrer")
+			?.split("/")
+			.at(-1) ?? ""
+		const showToggleAll = todos.length > 0
+
+		if (referrer === "active") {
+			todos = todos
+				.filter((element) => !element.isCompleted)
+		}
+		else if (referrer === "completed") {
+			todos = todos
+				.filter((element) => element.isCompleted)
+		}
+
+		return await view.render("toggle_all", { incompletedIds, referrer, showToggleAll, todos })
 	}
 }

@@ -1,0 +1,7 @@
+@if(referrer === "" && todos.length === 0)
+@!component("components/todo_list_footer", { incompletedIds, referrer, todos })
+@else
+@!component("components/todo_count", { incompletedIds })
+@end
+
+@!component("components/toggle_all", { incompletedIds, showToggleAll })
