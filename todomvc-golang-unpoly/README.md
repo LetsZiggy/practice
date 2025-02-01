@@ -1,0 +1,52 @@
+# [TodoMVC](https://todomvc.com/)
+
+- [Specification](https://github.com/tastejs/todomvc/blob/master/app-spec.md)
+- Resources
+	- [todomvc-common](https://github.com/tastejs/todomvc-common)
+	- [todomvc-app-css](https://github.com/tastejs/todomvc-app-css)
+
+#### Setup
+
+- Setup PostgreSQL
+	1. `cd <ROOT_FOLDER>/database`
+	2. Create and edit `development.env`
+		- Use `development.example.env` as example
+- Setup golang
+	1. `cd <ROOT_FOLDER>/golang`
+	2. Create and edit `.env`
+		- Use `.env.example` as example
+	3. `...`
+
+---
+
+#### Run
+
+1. Run database
+	1. Open new terminal
+	2. `cd <ROOT_FOLDER>/database`
+	3. Run `docker compose`
+		- To up docker compose containers
+			- `docker compose up --remove-orphans --build --detach`
+		- To down docker compose containers
+			- `docker compose down --remove-orphans --rmi=local`
+2. Run server
+	1. Open new terminal
+	2. `cd <ROOT_FOLDER>/golang`
+	3. `...`
+
+---
+
+#### Testing
+
+1. Run database
+	1. Open new terminal
+	2. `cd <ROOT_FOLDER>/database`
+	3. Run `docker compose`
+		- To up docker compose containers
+			- `docker compose up --remove-orphans --build --detach`
+		- To down docker compose containers
+			- `docker compose down --remove-orphans --rmi=local`
+2. Run server
+	1. Open new terminal
+	2. `cd <ROOT_FOLDER>/golang`
+	3. `...`
