@@ -1,0 +1,22 @@
+version: "3"
+
+silent: true
+
+# vars:
+
+tasks:
+  upgrade-go-version:
+    desc: task upgrade-go-version
+    cmds:
+      - go mod edit -go=$(sed 's/.*go\([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/g' <<< $(go version))
+      - cat go.mod | sed -n '3p' | sed -e 's/go \([0-9]\+\.[0-9]\+\.[0-9]\+\)/v\1/g'
+
+  css:
+    desc: task css
+    cmds:
+      - pnpm dlx @tailwindcss/cli -i ./tailwind.css -o ./static/styles.css
+
+  build:
+    desc: task build
+    cmds:
+      - go build -o ./wiki ./wiki.go
