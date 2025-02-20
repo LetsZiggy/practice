@@ -1,0 +1,52 @@
+#$schema: 'https://taskfile.dev/schema.json'
+
+version: '3'
+
+silent: true
+
+tasks:
+  upgrade-go-version:
+    desc: task upgrade-go-version
+    cmds:
+      - |
+        go mod edit -go=$(sed -E -e 's/.*go([0-9]+\.[0-9]+\.[0-9]+).*/\1/' <<< $(go version))
+        echo "go.mod" && cat {{.TASKFILE_DIR}}/go.mod | sed -n '3p' | sed -E -e 's/go ([0-9]+\.[0-9]+\.[0-9]+)/v\1/'
+
+  generate:css:
+    desc: task generate:css
+    cmds:
+      - |
+        BINARY_EPOCH=$(sed -E -z -e 's,^.*\n \* binary_epoch: ([0-9]+)\n.*$,\1,' {{.TASKFILE_DIR}}/tailwind.css)
+        BINARY_VERSION=$(sed -E -z -e 's,^.*\n \* binary_version: (v[0-9]+\.[0-9]+\.[0-9]+)\n.*$,\1,' {{.TASKFILE_DIR}}/tailwind.css)
+        STALE_EPOCH=$(( $(date +%s) - 604800 ))
+
+        # Check latest binary version
+        if [ "$BINARY_EPOCH" -lt "$STALE_EPOCH" ]; then
+          BINARY_VERSION=$(curl https://github.com/tailwindlabs/tailwindcss/releases | sed -E -z -z -e 's,(v[0-9]+\.[0-9]+\.[0-9]+).*$,\1,' -e 's,^.*(v[0-9]+\.[0-9]+\.[0-9]+),\1,')
+
+          # Update tailwind.css
+          BINARY_EPOCH=$(date +%s)
+          sed -E -i -z -e "s,^(.*\n \* binary_epoch: )[0-9]+(\n.*)$,\1$BINARY_EPOCH\2," {{.TASKFILE_DIR}}/tailwind.css
+          sed -E -i -z -e "s,^(.*\n \* binary_version: )v[0-9]+\.[0-9]+\.[0-9]+(\n.*)$,\1$BINARY_VERSION\2," {{.TASKFILE_DIR}}/tailwind.css
+        fi
+
+        if ! [ -f "{{.TASKFILE_DIR}}/tailwindcss-$BINARY_VERSION.bin" ]; then
+          # Remove old tailwindcss binaries
+          find . -maxdepth 1 -type f -name "tailwindcss-*.bin" -exec rm -rf '{}' \+;
+
+          # Download new tailwindcss binary if binary stale
+          wget -O "{{.TASKFILE_DIR}}/tailwindcss-$BINARY_VERSION.bin" "https://github.com/tailwindlabs/tailwindcss/releases/download/$BINARY_VERSION/tailwindcss-linux-x64"
+          chmod 755 "{{.TASKFILE_DIR}}/tailwindcss-$BINARY_VERSION.bin"
+        fi
+
+        "{{.TASKFILE_DIR}}/tailwindcss-$BINARY_VERSION.bin" -i {{.TASKFILE_DIR}}/tailwind.css -o {{.TASKFILE_DIR}}/static/styles.css
+
+  fix:prettier:
+    desc: task fix:prettier
+    cmds:
+      - pnpm dlx prettier --config {{.TASKFILE_DIR}}/prettier.config.js --ignore-path={{.TASKFILE_DIR}}/.prettierignore --write .
+
+  build:
+    desc: task build
+    cmds:
+      - go build -o {{.TASKFILE_DIR}}/wiki {{.TASKFILE_DIR}}/wiki.go
