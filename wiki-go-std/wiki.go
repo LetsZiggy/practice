@@ -3,7 +3,7 @@ package main
 import (
 	fmt "fmt"
 	log "log"
-	os "os"
+	http "net/http"
 )
 
 type Page struct {
@@ -11,26 +11,14 @@ type Page struct {
 	Body  []byte
 }
 
-func (page *Page) save() error {
-	filename := page.Title + ".txt"
-	return os.WriteFile(filename, page.Body, 0o600)
-}
-
-func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
-	body, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	return &Page{Title: title, Body: body}, nil
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "r.URL.Path %s", r.URL.Path)
+	fmt.Fprintf(w, "\n")
+	fmt.Fprintf(w, "r.URL.Path[1:] %s", r.URL.Path[1:])
 }
 
 func main() {
-	pageTest1 := &Page{Title: "TestPage", Body: []byte("This is a test page.")}
-	pageTest1.save()
-	pageTest2, err := loadPage("TestPage")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(string(pageTest2.Body))
+	http.HandleFunc("/", handler)
+	fmt.Println("Listening on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
