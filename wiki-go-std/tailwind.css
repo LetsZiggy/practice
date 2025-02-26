@@ -1,0 +1,10 @@
+/**
+ * binary_version: v4.3.3
+ * binary_epoch: 1789302430
+ */
+
+@import "tailwindcss";
+@plugin "@tailwindcss/forms" {
+	strategy: "class";
+}
+@plugin "@tailwindcss/typography";
