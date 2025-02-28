@@ -13,20 +13,26 @@ import (
 type Page struct {
 	Title string
 	Body  []byte
+	IsNew bool
+}
+
+type IndexPage struct {
+	Title string
+	Pages []string
 }
 
 var (
-	templates = html.Must(html.ParseFiles("edit.html", "view.html"))
+	templates = html.Must(html.ParseFiles("tmpl/edit.html", "tmpl/frontpage.html", "tmpl/view.html"))
 	validPath = re.MustCompile("^/((?:edit)|(?:save)|(?:view))/([a-zA-Z0-9]+)$")
 )
 
 func (page *Page) save() error {
-	filename := page.Title + ".txt"
+	filename := "data/" + page.Title + ".txt"
 	return os.WriteFile(filename, page.Body, 0o600)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
+	filename := "data/" + title + ".txt"
 	body, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -66,6 +72,34 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 	}
 }
 
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	page := &IndexPage{}
+
+	match := validPath.FindStringSubmatch(r.URL.Path)
+	if match == nil {
+		http.NotFound(w, r)
+
+		return
+	}
+	page.Title = match[2]
+
+	files, err := os.ReadDir("./data")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	page.Pages = make([]string, len(files), len(files))
+	for i, file := range files {
+		len := len(file.Name())
+		page.Pages[i] = file.Name()[:len-4]
+	}
+
+	err = templates.ExecuteTemplate(w, "frontpage.html", page)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	page, err := loadPage(title)
 	if err != nil {
@@ -80,7 +114,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 	page, err := loadPage(title)
 	if err != nil {
-		page = &Page{Title: title}
+		page = &Page{Title: title, IsNew: true}
 	}
 
 	renderTemplate(w, "edit", page)
@@ -99,6 +133,10 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func main() {
+	http.Handle("/", http.RedirectHandler("/view/frontpage", http.StatusFound))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+
+	http.HandleFunc("/view/frontpage", indexHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
