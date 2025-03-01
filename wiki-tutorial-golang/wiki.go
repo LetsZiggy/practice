@@ -11,18 +11,20 @@ import (
 )
 
 type Page struct {
+	Type  string
 	Title string
 	Body  []byte
 	IsNew bool
 }
 
 type IndexPage struct {
+	Type  string
 	Title string
 	Pages []string
 }
 
 var (
-	templates = html.Must(html.ParseFiles("tmpl/edit.html", "tmpl/frontpage.html", "tmpl/view.html"))
+	templates = html.Must(html.ParseFiles("tmpl/base.html", "tmpl/edit.partial.html", "tmpl/frontpage.partial.html", "tmpl/view.partial.html"))
 	validPath = re.MustCompile("^/((?:edit)|(?:save)|(?:view))/([a-zA-Z0-9]+)$")
 )
 
@@ -42,7 +44,9 @@ func loadPage(title string) (*Page, error) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, page *Page) {
-	err := templates.ExecuteTemplate(w, tmpl+".html", page)
+	page.Type = tmpl
+
+	err := templates.ExecuteTemplate(w, "base.html", page)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -73,7 +77,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	page := &IndexPage{}
+	page := &IndexPage{Type: "index"}
 
 	match := validPath.FindStringSubmatch(r.URL.Path)
 	if match == nil {
@@ -94,7 +98,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		page.Pages[i] = file.Name()[:len-4]
 	}
 
-	err = templates.ExecuteTemplate(w, "frontpage.html", page)
+	err = templates.ExecuteTemplate(w, "base.html", page)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
