@@ -1,0 +1,13 @@
+#$schema: 'https://taskfile.dev/schema.json'
+
+version: '3'
+
+silent: true
+
+tasks:
+  upgrade-go-version:
+    desc: task upgrade-go-version
+    cmds:
+      - |
+        go mod edit -go=$(sed -E -e 's/.*go([0-9]+\.[0-9]+\.[0-9]+).*/\1/' <<< $(go version))
+        echo "go.mod" && cat {{.TASKFILE_DIR}}/go.mod | sed -n '3p' | sed -E -e 's/go ([0-9]+\.[0-9]+\.[0-9]+)/v\1/'
