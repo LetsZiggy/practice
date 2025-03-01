@@ -1,0 +1,63 @@
+#$schema: 'https://taskfile.dev/schema.json'
+
+version: '3'
+
+silent: true
+
+tasks:
+  db:up:
+    desc: task db:up
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/database
+        docker compose up --remove-orphans --build --detach
+        cd "$CURRENT_DIR"
+
+  db:down:
+    desc: task db:down
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/database
+        docker compose down --remove-orphans --rmi=local
+        cd "$CURRENT_DIR"
+
+  upgrade-go-version:
+    desc: task upgrade-go-version
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}/golang
+        go mod edit -go=$(sed -E -e 's/.*go([0-9]+\.[0-9]+\.[0-9]+).*/\1/' <<< $(go version))
+        echo "go.mod" && cat {{.TASKFILE_DIR}}/golang/go.mod | sed -n '3p' | sed -E -e 's/go ([0-9]+\.[0-9]+\.[0-9]+)/v\1/'
+        cd "$CURRENT_DIR"
+
+  fix:prettier:
+    desc: task fix:prettier
+    cmds:
+      - |
+        CURRENT_DIR=$(pwd)
+        cd {{.TASKFILE_DIR}}
+        pnpm dlx prettier --config {{.TASKFILE_DIR}}/prettier.config.js --ignore-path={{.TASKFILE_DIR}}/.prettierignore --write {{.TASKFILE_DIR}}/golang
+        cd "$CURRENT_DIR"
+
+  server:build:
+    desc: task build
+    cmds:
+      - |
+        cd {{.TASKFILE_DIR}}/golang
+        go build -o {{.TASKFILE_DIR}}/golang/tmp/server {{.TASKFILE_DIR}}/golang
+
+  server:dev:
+    desc: task server:dev
+    cmds:
+      - |
+        cd {{.TASKFILE_DIR}}/golang
+        air -c .air.toml
+
+  server:test:
+    desc: task server:test
+    cmds:
+      - |
+        echo 'TODO :: task server:test'
