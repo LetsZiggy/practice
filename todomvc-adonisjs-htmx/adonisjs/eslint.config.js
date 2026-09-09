@@ -1,22 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-/* eslint @stylistic/migrate/migrate-js: "error" */
-/* eslint @stylistic/migrate/migrate-ts: "error" */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, import/no-named-as-default-member */
 
 import path from "node:path"
-// import adonisPlugin from "@adonisjs/eslint-plugin"
 import eslint from "@eslint/js"
 import stylisticPlugin from "@stylistic/eslint-plugin"
-import stylisticMigratePlugin from "@stylistic/eslint-plugin-migrate"
-// @ts-expect-error: package type error
+import { defineConfig } from "eslint/config"
 import importPlugin from "eslint-plugin-import"
 import nodePlugin from "eslint-plugin-n"
 // @ts-expect-error: package type error
 import promisePlugin from "eslint-plugin-promise"
+import regexpPlugin from "eslint-plugin-regexp"
 // @ts-expect-error: package type error
 import sortClassMembersPlugin from "eslint-plugin-sort-class-members"
 // @ts-expect-error: package type error
 import sortDestructureKeysPlugin from "eslint-plugin-sort-destructure-keys"
-// @ts-expect-error: package type error
 import unicornPlugin from "eslint-plugin-unicorn"
 import globals from "globals"
 import tseslint from "typescript-eslint"
@@ -58,6 +54,10 @@ const rootRules = {
 
 	"@typescript-eslint/no-floating-promises": ["warn"], // Overwrite tseslint default
 
+	"@typescript-eslint/no-inferrable-types": ["off"], // Overwrite tseslint default
+
+	"@typescript-eslint/no-require-imports": ["error", { allowAsImport: true }], // Overwrite tseslint default
+
 	"@typescript-eslint/non-nullable-type-assertion-style": ["warn"], // Overwrite tseslint default
 
 	"@typescript-eslint/strict-boolean-expressions": ["warn"], // Set
@@ -68,71 +68,7 @@ const rootRules = {
 
 	// ---sort-class-members--- //
 
-	"sort-class-members/sort-class-members": ["error", {
-		groups: {
-			appProvider: [
-				{ type: "method", name: "register" },
-				{ type: "method", name: "boot" },
-				{ type: "method", name: "ready" },
-				{ type: "method", name: "shutdown" },
-			],
-		},
-		order: [
-			// [static-properties] | [private-properties]
-			{ "type": "property", "sort": "alphabetical", "static": true, "private": true, "groupByDecorator": undefined },
-			// [static-properties] | [private-properties] | [arrow-function-properties]
-			{ "type": "property", "sort": "alphabetical", "static": true, "private": true, "groupByDecorator": undefined, "propertyType": "ArrowFunctionExpression" },
-			// [static-properties]
-			{ "type": "property", "sort": "alphabetical", "static": true, "private": false, "groupByDecorator": undefined },
-			// [static-properties] | [arrow-function-properties]
-			{ "type": "property", "sort": "alphabetical", "static": true, "private": false, "groupByDecorator": undefined, "propertyType": "ArrowFunctionExpression" },
-
-			// [private-properties]
-			{ "type": "property", "sort": "alphabetical", "static": false, "private": true, "groupByDecorator": undefined },
-			// [private-properties] | [arrow-function-properties]
-			{ "type": "property", "sort": "alphabetical", "static": false, "private": true, "groupByDecorator": undefined, "propertyType": "ArrowFunctionExpression" },
-
-			// [properties]
-			{ "type": "property", "sort": "alphabetical", "static": false, "private": false, "groupByDecorator": undefined },
-			// [arrow-function-properties]
-			{ "type": "property", "sort": "alphabetical", "static": false, "private": false, "groupByDecorator": undefined, "propertyType": "ArrowFunctionExpression" },
-
-			"constructor",
-
-			"[appProvider]",
-
-			// [accessor-pairs]
-			{ type: "method", sort: "alphabetical", accessorPair: true },
-			// [getters]
-			{ type: "method", sort: "alphabetical", kind: "get" },
-			// [setters]
-			{ type: "method", sort: "alphabetical", kind: "set" },
-
-			// [static-methods] | [private-methods] | [async-methods]
-			{ "type": "method", "sort": "alphabetical", "static": true, "private": true, "async": true },
-			// [static-methods] | [private-methods]
-			{ "type": "method", "sort": "alphabetical", "static": true, "private": true, "async": false },
-			// [static-methods] | [async-methods]
-			{ "type": "method", "sort": "alphabetical", "static": true, "private": false, "async": true },
-			// [static-methods]
-			{ "type": "method", "sort": "alphabetical", "static": true, "private": false, "async": false },
-
-			// [private-methods] | [async-methods]
-			{ "type": "method", "sort": "alphabetical", "static": false, "private": true, "async": true },
-			// [private-methods]
-			{ "type": "method", "sort": "alphabetical", "static": false, "private": true, "async": false },
-
-			// [async-methods]
-			{ "type": "method", "sort": "alphabetical", "static": false, "private": false, "async": true },
-			// [methods]
-			{ "type": "method", "sort": "alphabetical", "static": false, "private": false, "async": false },
-
-			"[everything-else]",
-		],
-		accessorPairPositioning: "getThenSet",
-		stopAfterFirstProblem: false,
-		locale: "en-US",
-	}], // Set
+	"sort-class-members/sort-class-members": ["error", { accessorPairPositioning: "getThenSet", stopAfterFirstProblem: false, locale: "en-US" }], // Set
 
 	// ---sort-destructure-keys--- //
 
@@ -140,7 +76,13 @@ const rootRules = {
 
 	// ---unicorn--- //
 
-	"unicorn/filename-case": ["error", { cases: { snakeCase: true, pascalCase: true }}], // Overwrite unicorn | Set { cases: { snakeCase: true }} for adonisjs
+	"unicorn/filename-case": ["error", { cases: { kebabCase: true, snakeCase: true }}], // Overwrite unicorn | Set { cases: { snakeCase: true }} for adonisjs
+
+	"unicorn/name-replacements": ["error", { checkFilenames: false }], // Overwrite unicorn
+
+	"unicorn/no-array-reduce": ["off"], // Overwrite unicorn
+
+	"unicorn/no-useless-undefined": ["off"], // Overwrite unicorn
 
 	"unicorn/prefer-at": ["error"], // Overwrite unicorn
 
@@ -148,11 +90,7 @@ const rootRules = {
 
 	"unicorn/prefer-string-replace-all": ["error"], // Overwrite unicorn
 
-	"unicorn/prevent-abbreviations": ["error", { checkFilenames: false }], // Overwrite unicorn
-
-	"unicorn/no-array-reduce": ["off"], // Overwrite unicorn
-
-	"unicorn/no-useless-undefined": ["off"], // Overwrite unicorn
+	"unicorn/single-line-block-comment-style": ["off"], // Overwrite unicorn
 
 	// ---@stylistic--- //
 
@@ -250,7 +188,7 @@ const rootRules = {
 
 	"@stylistic/object-curly-spacing": ["error", "always", { arraysInObjects: true, objectsInObjects: false }],
 
-	"@stylistic/object-property-newline": ["error", { allowMultiplePropertiesPerLine: true, allowAllPropertiesOnSameLine: false }],
+	"@stylistic/object-property-newline": ["error", { allowAllPropertiesOnSameLine: true }],
 
 	"@stylistic/one-var-declaration-per-line": ["error", "initializations"],
 
@@ -262,7 +200,7 @@ const rootRules = {
 
 	"@stylistic/quote-props": ["error", "consistent-as-needed", { keywords: true }],
 
-	"@stylistic/quotes": ["error", "double", { avoidEscape: true, allowTemplateLiterals: true }],
+	"@stylistic/quotes": ["error", "double", { avoidEscape: true, allowTemplateLiterals: "always" }],
 
 	"@stylistic/rest-spread-spacing": ["error", "never"],
 
@@ -290,7 +228,7 @@ const rootRules = {
 
 	"@stylistic/template-tag-spacing": ["error", "never"],
 
-	"@stylistic/type-annotation-spacing": ["error", { before: false, after: true, overrides: { arrow: { before: true, after: true }}}],
+	"@stylistic/type-annotation-spacing": ["error", { before: true, after: true, overrides: { colon: { before: false, after: true }}}],
 
 	"@stylistic/type-generic-spacing": ["error"],
 
@@ -301,90 +239,31 @@ const rootRules = {
 	"@stylistic/wrap-regex": ["error"],
 
 	"@stylistic/yield-star-spacing": ["error", "after"],
-
-	// ---@adonisjs--- //
-
-	// "@adonisjs/prefer-lazy-controller-import": ["error"], // Set
-
-	// "@adonisjs/prefer-lazy-listener-import": ["error"], // Set
 }
 
-export default tseslint.config(
-	eslint.configs.recommended,
-	tseslint.configs.recommendedTypeChecked,
-	tseslint.configs.stylisticTypeChecked,
-	importPlugin.flatConfigs.recommended,
-	// nodePlugin.configs["flat/recommended"],
-	promisePlugin.configs["flat/recommended"],
-	sortClassMembersPlugin.configs["flat/recommended"],
-	unicornPlugin.configs.recommended,
+export default defineConfig([
 	{
 		ignores: [
-			"**/.git",
-			"**/.svn",
-			"**/.hg",
-			"**/CVS",
-			"**/node_modules",
-			"**/vendor",
-			"**/.env",
-			"**/env",
-			"**/.venv",
-			"**/venv",
-			"**/.env.bak",
-			"**/env.bak",
-			"**/.venv.bak",
-			"**/venv.bak",
-			"**/ENV",
-			"**/__pycache__",
+			"**/.git/",
+			"**/.svn/",
+			"**/.hg/",
+			"**/CVS/",
+			"**/node_modules/",
+			"**/vendor/",
+			"**/.env/",
+			"**/env/",
+			"**/.venv/",
+			"**/venv/",
+			"**/.env.bak/",
+			"**/env.bak/",
+			"**/.venv.bak/",
+			"**/venv.bak/",
+			"**/ENV/",
+			"**/__pycache__/",
 		],
-		plugins: {
-			// "@adonisjs": adonisPlugin,
-			// "import": importPlugin, // uncomment if not using recommended
-			"n": nodePlugin, // uncomment if not using recommended
-			// "promise": promisePlugin, // uncomment if not using recommended
-			"sort-destructure-keys": sortDestructureKeysPlugin,
-			"@stylistic": stylisticPlugin,
-			"@stylistic/migrate": stylisticMigratePlugin,
-		},
-		languageOptions: {
-			globals: {
-				...globals.builtin,
-				...globals.es2025,
-				...globals.browser,
-				...globals.node,
-				...globals.serviceworker,
-				...globals["shared-node-browser"],
-			},
-			parser: tseslint.parser,
-			ecmaVersion: "latest",
-			sourceType: "module",
-			parserOptions: {
-				ecmaVersion: "latest",
-				sourceType: "module",
-				projectService: true,
-				tsconfigRootDir: __dirname,
-			},
-		},
-		settings: {
-			"import/extensions": [".js", ".cjs", ".mjs", ".ts", ".cts", ".mts"],
-			"import/parsers": {
-				"@typescript-eslint/parser": [".js", ".cjs", ".mjs", ".ts", ".cts", ".mts"],
-			},
-			"import/resolver": {
-				node: {
-					extensions: [".js", ".cjs", ".mjs", ".ts", ".cts", ".mts"],
-				},
-				typescript: {
-					alwaysTryTypes: true,
-					project: [path.join(__dirname, "tsconfig.json")],
-				},
-			},
-		},
-		// @ts-expect-error: package type error
-		rules: rootRules,
 	},
 	{
-		files: [
+		"files": [
 			"**/.*.js",
 			"**/.*.cjs",
 			"**/.*.mjs",
@@ -398,21 +277,60 @@ export default tseslint.config(
 			"**/*.cts",
 			"**/*.mts",
 		],
-	},
-	{
-		files: [
-			"**/.*.js",
-			"**/.*.cjs",
-			"**/*.js",
-			"**/*.cjs",
-			"**/.*.ts",
-			"**/.*.cts",
-			"**/*.ts",
-			"**/*.cts",
+		"extends": [
+			eslint.configs.recommended,
+			tseslint.configs.recommendedTypeChecked,
+			tseslint.configs.stylisticTypeChecked,
+			importPlugin.flatConfigs.recommended,
+			// nodePlugin.configs["flat/recommended"],
+			promisePlugin.configs["flat/recommended"],
+			sortClassMembersPlugin.configs["flat/recommended"],
+			regexpPlugin.configs.recommended,
+			unicornPlugin.configs.recommended,
 		],
-		rules: {
-			"@typescript-eslint/no-require-imports": ["off"],
+		"plugins": {
+			// "import": importPlugin, // uncomment if not using recommended
+			"n": nodePlugin, // uncomment if not using recommended
+			// "promise": promisePlugin, // uncomment if not using recommended
+			"sort-destructure-keys": sortDestructureKeysPlugin,
+			"@stylistic": stylisticPlugin,
 		},
+		"languageOptions": {
+			globals: {
+				...globals.builtin,
+				...globals.es2027,
+				...globals.browser,
+				...globals.node,
+				...globals.serviceworker,
+				...globals["shared-node-browser"],
+			},
+			parser: tseslint.parser,
+			ecmaVersion: "latest",
+			sourceType: "module",
+			parserOptions: {
+				ecmaVersion: "latest",
+				sourceType: "module",
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
+				// extraFileExtensions: [],
+			},
+		},
+		"settings": {
+			"import/extensions": [".js", ".cjs", ".mjs", ".ts", ".cts", ".mts"],
+			"import/parsers": {
+				"@typescript-eslint/parser": [".js", ".cjs", ".mjs", ".ts", ".cts", ".mts"],
+			},
+			"import/resolver": {
+				node: {
+					extensions: [".js", ".cjs", ".mjs", ".ts", ".cts", ".mts"],
+				},
+				typescript: {
+					alwaysTryTypes: true,
+					project: [path.join(import.meta.dirname, "tsconfig.json")],
+				},
+			},
+		},
+		// @ts-expect-error: package type error
+		"rules": rootRules,
 	},
-	stylisticPlugin.configs["disable-legacy"],
-)
+])

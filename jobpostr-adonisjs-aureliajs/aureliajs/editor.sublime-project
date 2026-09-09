@@ -4,9 +4,9 @@
 			"path": ".",
 			"name": "aureliajs",
 			"folder_exclude_patterns": [
-				".svn",
 				".git",
 				".hg",
+				".svn",
 				"CVS",
 				"node_modules",
 				"vendor",
@@ -20,10 +20,13 @@
 				"venv.bak",
 				"ENV",
 				"__pycache__",
+				".ruff_cache",
+				"*.egg-info",
 
 				"public",
 				"scripts",
 			],
+			"file_exclude_patterns":[".tsbuildinfo"],
 			"follow_symlinks": true,
 		},
 	],
@@ -72,6 +75,7 @@
 			// "auto_format_on_save_excludes": [],
 			"auto_format_on_save_requires_prettier_config": true,
 			"allow_inline_formatting": true,
+			"prettier_cli_path": "${project_path}/node_modules/.bin/prettier",
 			"additional_cli_args": {
 				"--config": "${project_path}/prettier.config.js",
 				"--config-precedence": "prefer-file",
@@ -85,6 +89,7 @@
 			"source.fixAll.eslint": true,
 			"source.fixAll.json": false,
 			"source.fixAll.stylelint": true,
+			"source.fixAll.yaml": true,
 		},
 
 		"LSP": {

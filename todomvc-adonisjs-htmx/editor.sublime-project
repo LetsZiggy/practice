@@ -4,9 +4,9 @@
 			"path": ".",
 			"name": "root",
 			"folder_exclude_patterns": [
-				".svn",
 				".git",
 				".hg",
+				".svn",
 				"CVS",
 				"node_modules",
 				"vendor",
@@ -20,6 +20,8 @@
 				"venv.bak",
 				"ENV",
 				"__pycache__",
+				".ruff_cache",
+				"*.egg-info",
 
 				"adonisjs",
 				"database",
@@ -29,7 +31,8 @@
 		{
 			"path": "adonisjs",
 			"name": "adonisjs",
-			"folder_exclude_patterns": ["node_modules", "build"],
+			"folder_exclude_patterns": ["node_modules", ".parcel-cache", "build"],
+			"file_exclude_patterns":[".tsbuildinfo"],
 			"follow_symlinks": true,
 		},
 		{
@@ -59,6 +62,7 @@
 			// "auto_format_on_save_excludes": [],
 			"auto_format_on_save_requires_prettier_config": true,
 			"allow_inline_formatting": true,
+			"prettier_cli_path": "${project_path}/adonisjs/node_modules/.bin/prettier",
 			"additional_cli_args": {
 				"--config": "${project_path}/adonisjs/prettier.config.js",
 				"--config-precedence": "prefer-file",

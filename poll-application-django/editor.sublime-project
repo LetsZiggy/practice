@@ -3,19 +3,67 @@
 		{
 			"path": ".",
 			"name": "root",
-			"folder_exclude_patterns": [".svn", ".git", ".hg", "CVS", "django", "django-polls"],
+			"folder_exclude_patterns": [
+				".git",
+				".hg",
+				".svn",
+				"CVS",
+				"node_modules",
+				"vendor",
+				".env",
+				"env",
+				".venv",
+				"venv",
+				".env.bak",
+				"env.bak",
+				".venv.bak",
+				"venv.bak",
+				"ENV",
+				"__pycache__",
+				".ruff_cache",
+				"*.egg-info",
+
+				"django",
+				"django-polls",
+			],
 			"follow_symlinks": true,
 		},
 		{
 			"path": "django",
 			"name": "django",
-			"folder_exclude_patterns": ["__pycache__", "venv"],
+			"folder_exclude_patterns": [
+				".env",
+				"env",
+				".venv",
+				"venv",
+				".env.bak",
+				"env.bak",
+				".venv.bak",
+				"venv.bak",
+				"ENV",
+				"__pycache__",
+				".ruff_cache",
+				"*.egg-info",
+			],
 			"follow_symlinks": true,
 		},
 		{
 			"path": "django-polls",
 			"name": "django-polls",
-			"folder_exclude_patterns": ["__pycache__", "venv"],
+			"folder_exclude_patterns": [
+				".env",
+				"env",
+				".venv",
+				"venv",
+				".env.bak",
+				"env.bak",
+				".venv.bak",
+				"venv.bak",
+				"ENV",
+				"__pycache__",
+				".ruff_cache",
+				"*.egg-info",
+			],
 			"follow_symlinks": true,
 		},
 	],
@@ -38,6 +86,7 @@
 			"source.fixAll.json": false,
 			"source.fixAll.ruff": true,
 			"source.organizeImports.ruff": false,
+			"source.fixAll.yaml": true,
 		},
 
 		"LSP": {
@@ -45,8 +94,8 @@
 			"LSP-basedpyright": {
 				"enabled": true,
 				"settings": {
-					"python.pythonPath": "${project_path}/django/venv/bin/python",
-					"python.venvPath": "${project_path}/django/venv",
+					"python.pythonPath": "${project_path}/django/.venv/bin/python",
+					"python.venvPath": "${project_path}/django/.venv",
 					"basedpyright.disableOrganizeImports": true,
 				},
 			},
@@ -54,10 +103,8 @@
 			/* LSP-ruff */
 			"LSP-ruff": {
 				"enabled": true,
-				"initializationOptions": {
-					"settings": {
-						"configuration": "${project_path}/django/pyproject.toml",
-					},
+				"initialization_options": {
+					"settings.configuration": "${project_path}/django/pyproject.toml",
 				},
 			},
 		},

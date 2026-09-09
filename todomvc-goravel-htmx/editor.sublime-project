@@ -3,7 +3,29 @@
 		{
 			"path": ".",
 			"name": "root",
-			"folder_exclude_patterns": [".svn", ".git", ".hg", "CVS", "goravel", "database"],
+			"folder_exclude_patterns": [
+				".git",
+				".hg",
+				".svn",
+				"CVS",
+				"node_modules",
+				"vendor",
+				".env",
+				"env",
+				".venv",
+				"venv",
+				".env.bak",
+				"env.bak",
+				".venv.bak",
+				"venv.bak",
+				"ENV",
+				"__pycache__",
+				".ruff_cache",
+				"*.egg-info",
+
+				"goravel",
+				"database",
+			],
 			"follow_symlinks": true,
 		},
 		{
@@ -39,6 +61,7 @@
 			// "auto_format_on_save_excludes": [],
 			"auto_format_on_save_requires_prettier_config": true,
 			"allow_inline_formatting": true,
+			"prettier_cli_path": "${project_path}/node_modules/.bin/prettier",
 			"additional_cli_args": {
 				"--config": "${project_path}/prettier.config.js",
 				"--config-precedence": "prefer-file",
